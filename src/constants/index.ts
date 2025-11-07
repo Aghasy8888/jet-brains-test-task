@@ -2,13 +2,13 @@ export const API_BASE_URL =
   import.meta.env.VITE_API_BASE_URL || '';
 
 export const API_ENDPOINTS = {
-  categories: '/api_category.php',
   questions: '/api.php',
+  token: '/api_token.php',
 } as const;
 
 export const DIFFICULTY_LEVELS = ['easy', 'medium', 'hard'] as const;
 
-export const MIN_QUESTIONS_REQUIRED = 50;
+export const QUESTIONS_PER_LOAD = 50;
 
 export const CHART_COLORS = [
   "#3b82f6", // Blue
@@ -53,3 +53,6 @@ export const CHART_COLORS = [
 
 export const CATEGORIES = 'categories';
 export const DIFFICULTY_DATA = 'difficulty data';
+export const REQUEST = 'request';
+export const RESET = 'reset';
+export const MULTIPLE = 'multiple';

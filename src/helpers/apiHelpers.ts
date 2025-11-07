@@ -1,9 +1,9 @@
 import axios from 'axios';
 import type {
+  TokenResponse,
   TriviaResponse,
-  TriviaCategoriesResponse,
 } from '../types';
-import { API_BASE_URL, API_ENDPOINTS } from '../constants';
+import { API_BASE_URL, API_ENDPOINTS, MULTIPLE, REQUEST, RESET } from '../constants';
 
 const MAX_RETRIES = 3;
 const INITIAL_DELAY = 1000;
@@ -32,26 +32,44 @@ async function fetchWithRetry<T>(
   }
 }
 
-export async function fetchCategories(): Promise<TriviaCategoriesResponse> {
-  const url = `${API_BASE_URL}${API_ENDPOINTS.categories}`;
+export async function requestSessionToken(): Promise<string> {
+  const url = `${API_BASE_URL}${API_ENDPOINTS.token}`;
   return fetchWithRetry(async () => {
-    const response = await axios.get<TriviaCategoriesResponse>(url);
-    return response.data;
+    const response = await axios.get<TokenResponse>(url, {
+      params: { command: REQUEST },
+    });
+    if (response.data.response_code === 0) {
+      return response.data.token;
+    }
+    throw new Error(`Failed to request token: ${response.data.response_message}`);
+  });
+}
+
+export async function resetSessionToken(token: string): Promise<string> {
+  const url = `${API_BASE_URL}${API_ENDPOINTS.token}`;
+  return fetchWithRetry(async () => {
+    const response = await axios.get<TokenResponse>(url, {
+      params: { command: RESET, token },
+    });
+    if (response.data.response_code === 0) {
+      return response.data.token;
+    }
+    throw new Error(`Failed to reset token: ${response.data.response_message}`);
   });
 }
 
 export async function fetchQuestions(
-  categoryId?: number,
-  amount: number = 50
+  amount: number = 50,
+  token?: string
 ): Promise<TriviaResponse> {
   const url = `${API_BASE_URL}${API_ENDPOINTS.questions}`;
   const params: Record<string, string | number> = {
     amount,
-    type: 'multiple',
+    type: MULTIPLE,
   };
 
-  if (categoryId) {
-    params.category = categoryId;
+  if (token) {
+    params.token = token;
   }
 
   return fetchWithRetry(async () => {

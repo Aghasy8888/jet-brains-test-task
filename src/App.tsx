@@ -12,7 +12,9 @@ function App() {
   const {
     questions,
     loading: questionsLoading,
+    loadingMore,
     error: questionsError,
+    loadMoreQuestions,
   } = useTriviaQuestions();
 
   const {
@@ -62,6 +64,8 @@ function App() {
           onCategoryChange={setSelectedCategory}
           totalQuestions={totalQuestions}
           questions={filteredQuestions}
+          loadMoreQuestions={loadMoreQuestions}
+          loadingMore={loadingMore}
         />
       </div>
     </div>

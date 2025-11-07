@@ -14,6 +14,8 @@ interface StatsDashboardProps {
   onCategoryChange: (category: string | null) => void;
   totalQuestions: number;
   questions: TriviaQuestion[];
+  loadMoreQuestions?: () => Promise<void>;
+  loadingMore?: boolean;
 }
 
 function StatsDashboard({
@@ -25,6 +27,8 @@ function StatsDashboard({
   onCategoryChange,
   totalQuestions,
   questions,
+  loadMoreQuestions,
+  loadingMore = false,
 }: StatsDashboardProps) {
   const questionsByCategory = groupByCategory(questions);
   return (
@@ -42,6 +46,15 @@ function StatsDashboard({
                   {' '}{totalQuestions}
                 </span>
               </p>
+              {loadMoreQuestions && (
+                <button
+                  onClick={loadMoreQuestions}
+                  disabled={loadingMore}
+                  className="mt-2 px-4 py-2 bg-blue-600 dark:bg-blue-500 text-white rounded-lg hover:bg-blue-700 dark:hover:bg-blue-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm sm:text-base"
+                >
+                  {loadingMore ? 'Loading...' : 'Load More Questions'}
+                </button>
+              )}
             </div>
           </div>
         </div>

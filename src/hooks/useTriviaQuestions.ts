@@ -1,13 +1,58 @@
 import { useState, useEffect, useRef } from 'react';
 import type { TriviaQuestion } from '../types';
-import { fetchQuestions } from '../helpers/apiHelpers';
-import { MIN_QUESTIONS_REQUIRED } from '../constants';
+import { fetchQuestions, requestSessionToken, resetSessionToken } from '../helpers/apiHelpers';
+import { QUESTIONS_PER_LOAD } from '../constants';
 
 export function useTriviaQuestions() {
   const [questions, setQuestions] = useState<TriviaQuestion[]>([]);
   const [loading, setLoading] = useState(true);
+  const [loadingMore, setLoadingMore] = useState(false);
   const [error, setError] = useState<Error | null>(null);
+  const [sessionToken, setSessionToken] = useState<string | null>(null);
   const hasFetchedRef = useRef(false);
+
+  const fetchQuestionsWithTokenHandling = async (
+    token: string | null
+  ): Promise<TriviaQuestion[]> => {
+    const data = await fetchQuestions(QUESTIONS_PER_LOAD, token || undefined);
+
+    if (data.response_code === 4 && token) {
+      try {
+        const newToken = await resetSessionToken(token);
+        setSessionToken(newToken);
+
+        const retryData = await fetchQuestions(QUESTIONS_PER_LOAD, newToken);
+        if (retryData.response_code === 0) {
+          return retryData.results;
+        } else if (retryData.results.length > 0) {
+          return retryData.results;
+        } else {
+          throw new Error(`API returned response code: ${retryData.response_code}`);
+        }
+      } catch (resetError) {
+        try {
+          const newToken = await requestSessionToken();
+          setSessionToken(newToken);
+          const newData = await fetchQuestions(QUESTIONS_PER_LOAD, newToken);
+          if (newData.response_code === 0) {
+            return newData.results;
+          } else if (newData.results.length > 0) {
+            return newData.results;
+          } else {
+            throw new Error(`API returned response code: ${newData.response_code}`);
+          }
+        } catch (newTokenError) {
+          throw new Error('Failed to manage session token');
+        }
+      }
+    } else if (data.response_code === 0) {
+      return data.results;
+    } else if (data.results.length > 0) {
+      return data.results;
+    } else {
+      throw new Error(`API returned response code: ${data.response_code}`);
+    }
+  };
 
   useEffect(() => {
     if (hasFetchedRef.current) {
@@ -20,19 +65,17 @@ export function useTriviaQuestions() {
         setError(null);
         hasFetchedRef.current = true;
 
-        const data = await fetchQuestions(undefined, MIN_QUESTIONS_REQUIRED);
-        
-        if (data.response_code === 0) {
-          setQuestions(data.results);
-          setLoading(false);
-        } else {
-          if (data.results.length > 0) {
-            setQuestions(data.results);
-            setLoading(false);
-          } else {
-            throw new Error(`API returned response code: ${data.response_code}`);
-          }
+        let token: string | null = null;
+        try {
+          token = await requestSessionToken();
+          setSessionToken(token);
+        } catch (tokenError) {
+          console.warn('Failed to request session token:', tokenError);
         }
+
+        const results = await fetchQuestionsWithTokenHandling(token);
+        setQuestions(results);
+        setLoading(false);
       } catch (err) {
         setError(err instanceof Error ? err : new Error('Failed to fetch questions'));
         setLoading(false);
@@ -48,27 +91,25 @@ export function useTriviaQuestions() {
     }
   }, [questions.length, loading]);
 
-  const refetch = async () => {
-    hasFetchedRef.current = false;
-    setQuestions([]);
-    setLoading(true);
-    setError(null);
-    
+  const loadMoreQuestions = async () => {
+    if (!sessionToken) {
+      setError(new Error('Session token not available. Please refresh the page.'));
+      return;
+    }
+
     try {
-      const data = await fetchQuestions(undefined, MIN_QUESTIONS_REQUIRED);
-      if (data.response_code === 0) {
-        setQuestions(data.results);
-      } else if (data.results.length > 0) {
-        setQuestions(data.results);
-      } else {
-        throw new Error(`API returned response code: ${data.response_code}`);
-      }
+      setLoadingMore(true);
+      setError(null);
+
+      const results = await fetchQuestionsWithTokenHandling(sessionToken);
+      setQuestions((prev) => [...prev, ...results]);
     } catch (err) {
-      setError(err instanceof Error ? err : new Error('Failed to fetch questions'));
-      setLoading(false);
+      setError(err instanceof Error ? err : new Error('Failed to load more questions'));
+    } finally {
+      setLoadingMore(false);
     }
   };
 
-  return { questions, loading, error, refetch };
+  return { questions, loading, loadingMore, error, loadMoreQuestions };
 }
 

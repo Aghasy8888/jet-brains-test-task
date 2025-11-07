@@ -7,20 +7,6 @@ export interface TriviaQuestion {
   incorrect_answers: string[];
 }
 
-export interface TriviaResponse {
-  response_code: number;
-  results: TriviaQuestion[];
-}
-
-export interface TriviaCategory {
-  id: number;
-  name: string;
-}
-
-export interface TriviaCategoriesResponse {
-  trivia_categories: TriviaCategory[];
-}
-
 export interface CategoryStats {
   category: string;
   count: number;
@@ -36,3 +22,14 @@ export interface DropdownOption<T = string> {
   label: string;
 }
 
+// API Response Types
+export interface TokenResponse {
+  response_code: number;
+  response_message: string;
+  token: string;
+}
+
+export interface TriviaResponse {
+  response_code: number;
+  results: TriviaQuestion[];
+}
