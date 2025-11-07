@@ -1,0 +1,29 @@
+@theme {
+   /* Colors */
+  --color-light-gray: #F6F7F8;
+  --color-blue-primary: #3b82f6;
+  --color-blue-secondary: #2563eb;
+  --color-green-primary: #10b981;
+  --color-orange-primary: #f59e0b;
+  --color-red-primary: #ef4444;
+  --color-purple-primary: #8b5cf6;
+  --color-pink-primary: #ec4899;
+  --color-cyan-primary: #06b6d4;
+  --color-lime-primary: #84cc16;
+  --color-dark: #072635;
+  
+   /* Spacing */
+  --spacing-xs: 0.25rem;
+  
+   /* Fonts sizes */
+  --font-size-hero: 4rem;
+
+  /* Custom radius */
+  --radius-xxl: 70px;
+  /* Tracking */
+  --tracking-0: 0;
+
+  /* Icons */
+  --icon-chevron-down: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-width='2' viewBox='0 0 24 24'><polyline points='6 9 12 15 18 9'/></svg>");
+}
+
