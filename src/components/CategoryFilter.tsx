@@ -1,4 +1,4 @@
-import Dropdown from './Dropdown';
+import { Dropdown } from '../common';
 import type { DropdownOption } from '../types';
 
 interface CategoryFilterProps {

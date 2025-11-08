@@ -10,7 +10,7 @@ import type { CategoryStats } from "../types";
 import { useMediaQuery } from "../hooks/useMediaQuery";
 import { CHART_COLORS, CATEGORIES } from "../constants";
 import ChartTooltip from "./ChartTooltip";
-import NoDataMessage from "./NoDataMessage";
+import { NoDataMessage } from "../common";
 
 interface CategoryChartProps {
   data: CategoryStats[];

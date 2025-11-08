@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react';
-import { CheckmarkIcon } from '../common';
+import CheckmarkIcon from './icons/CheckmarkIcon';
 import type { DropdownOption } from '../types';
 import { useClickOutside } from '../hooks/useClickOutside';
 

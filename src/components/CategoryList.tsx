@@ -1,8 +1,7 @@
 import { useState } from "react";
 import type { CategoryStats, TriviaQuestion } from "../types";
-import { ChevronDownIcon } from "../common";
+import { ChevronDownIcon, NoDataMessage } from "../common";
 import QuestionList from "./QuestionList";
-import NoDataMessage from "./NoDataMessage";
 import { CATEGORIES } from "../constants";
 
 interface CategoryListProps {

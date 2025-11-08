@@ -2,7 +2,7 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsive
 import type { DifficultyStats } from '../types';
 import { DIFFICULTY_DATA } from '../constants';
 import ChartTooltip from './ChartTooltip';
-import NoDataMessage from './NoDataMessage';
+import { NoDataMessage } from '../common';
 
 interface DifficultyChartProps {
   data: DifficultyStats[];
