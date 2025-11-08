@@ -6,9 +6,22 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "lint": "eslint .",
+    "lint": "eslint . --cache --max-warnings=0",
     "preview": "vite preview",
-    "format": "prettier --write \"src/**/*.{ts,tsx,js,jsx,json,css}\""
+    "format": "prettier --write \"src/**/*.{ts,tsx,js,jsx,json,css,html,cjs,mjs}\"",
+    "type-check": "tsc --noEmit",
+    "clean": "rimraf dist .turbo .vite",
+    "check": "npm run lint && npm run type-check && vite build",
+    "prepare": "husky install"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx}": [
+      "prettier --write",
+      "eslint --cache --fix"
+    ],
+    "*.{json,css,html,cjs,mjs}": [
+      "prettier --write"
+    ]
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.16",
@@ -30,6 +43,8 @@
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.22",
     "globals": "^16.4.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.6",
     "prettier": "^3.6.2",
     "typescript": "~5.9.3",
     "typescript-eslint": "^8.45.0",
