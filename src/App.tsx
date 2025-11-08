@@ -4,6 +4,8 @@ import { Spinner, ErrorModal } from "./common";
 import { useTriviaQuestions } from "./hooks/useTriviaQuestions";
 import { useTriviaStats } from "./hooks/useTriviaStats";
 import { decodeHtmlEntities } from "./helpers/htmlDecoder";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 
 function App() {
@@ -53,22 +55,36 @@ function App() {
   }
 
   return (
-    <main className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8 transition-colors">
-      <div className="container mx-auto px-4 max-w-7xl">
-        <StatsDashboard
-          categoryStatsForChart={categoryStatsForChart}
-          categoryStatsForList={categoryStatsForList}
-          difficultyStats={difficultyStats}
-          categories={uniqueCategories}
-          selectedCategory={selectedCategory}
-          onCategoryChange={setSelectedCategory}
-          totalQuestions={totalQuestions}
-          questions={filteredQuestions}
-          loadMoreQuestions={loadMoreQuestions}
-          loadingMore={loadingMore}
-        />
-      </div>
-    </main>
+    <>
+      <main className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8 transition-colors">
+        <div className="container mx-auto px-4 max-w-7xl">
+          <StatsDashboard
+            categoryStatsForChart={categoryStatsForChart}
+            categoryStatsForList={categoryStatsForList}
+            difficultyStats={difficultyStats}
+            categories={uniqueCategories}
+            selectedCategory={selectedCategory}
+            onCategoryChange={setSelectedCategory}
+            totalQuestions={totalQuestions}
+            questions={filteredQuestions}
+            loadMoreQuestions={loadMoreQuestions}
+            loadingMore={loadingMore}
+          />
+        </div>
+      </main>
+      <ToastContainer
+        position="bottom-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
+    </>
   );
 }
 

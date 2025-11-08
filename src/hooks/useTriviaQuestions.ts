@@ -1,7 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
-import type { TriviaQuestion } from '../types';
+import { toast } from 'react-toastify';
+import type { TriviaQuestion, TriviaResponse } from '../types';
 import { fetchQuestions, requestSessionToken, resetSessionToken } from '../helpers/apiHelpers';
-import { QUESTIONS_PER_LOAD } from '../constants';
+import { QUESTIONS_PER_LOAD, RESPONSE_CODES } from '../constants';
 
 export function useTriviaQuestions() {
   const [questions, setQuestions] = useState<TriviaQuestion[]>([]);
@@ -10,48 +11,78 @@ export function useTriviaQuestions() {
   const [error, setError] = useState<Error | null>(null);
   const [sessionToken, setSessionToken] = useState<string | null>(null);
   const hasFetchedRef = useRef(false);
+  const isHandlingTokenRef = useRef(false);
+
+  const handleResponseCode = async (
+    data: TriviaResponse,
+    currentToken: string | null,
+    requestedAmount: number = QUESTIONS_PER_LOAD
+  ): Promise<TriviaQuestion[]> => {
+    const { response_code, results } = data;
+
+    if (response_code === RESPONSE_CODES.SUCCESS) {
+      return results;
+    }
+
+    if (isHandlingTokenRef.current) {
+      throw new Error('Token handling already in progress');
+    }
+
+    isHandlingTokenRef.current = true;
+
+    try {
+      switch (response_code) {
+        case RESPONSE_CODES.NO_RESULTS: {
+          if (requestedAmount > 1) {
+            const reducedAmount = Math.floor(requestedAmount / 2);
+            
+            if(reducedAmount < 1) {
+              toast.info('There are no more questions for this query');
+              return [];
+            }
+
+            const retryData = await fetchQuestions(reducedAmount, currentToken || undefined);
+            return handleResponseCode(retryData, currentToken, reducedAmount);
+          } else {
+            toast.info('There are no more questions for this query');
+            return [];
+          }
+        }
+
+        case RESPONSE_CODES.TOKEN_NOT_FOUND: {
+          const newToken = await requestSessionToken();
+          setSessionToken(newToken);
+          const retryData = await fetchQuestions(QUESTIONS_PER_LOAD, newToken);
+          return handleResponseCode(retryData, newToken);
+        }
+
+        case RESPONSE_CODES.TOKEN_EMPTY: {
+          if (!currentToken) {
+            throw new Error('Cannot reset token: no token available');
+          }
+          const newToken = await resetSessionToken(currentToken);
+          setSessionToken(newToken);
+          const retryData = await fetchQuestions(QUESTIONS_PER_LOAD, newToken);
+          return handleResponseCode(retryData, newToken);
+        }
+
+        case RESPONSE_CODES.INVALID_PARAMETER: {
+          throw new Error('Invalid parameter: make sure to pass valid parameters to the API');
+        }
+
+        default:
+          throw new Error(`Unexpected API response code: ${response_code}`);
+      }
+    } finally {
+      isHandlingTokenRef.current = false;
+    }
+  };
 
   const fetchQuestionsWithTokenHandling = async (
     token: string | null
   ): Promise<TriviaQuestion[]> => {
     const data = await fetchQuestions(QUESTIONS_PER_LOAD, token || undefined);
-
-    if (data.response_code === 4 && token) {
-      try {
-        const newToken = await resetSessionToken(token);
-        setSessionToken(newToken);
-
-        const retryData = await fetchQuestions(QUESTIONS_PER_LOAD, newToken);
-        if (retryData.response_code === 0) {
-          return retryData.results;
-        } else if (retryData.results.length > 0) {
-          return retryData.results;
-        } else {
-          throw new Error(`API returned response code: ${retryData.response_code}`);
-        }
-      } catch (resetError) {
-        try {
-          const newToken = await requestSessionToken();
-          setSessionToken(newToken);
-          const newData = await fetchQuestions(QUESTIONS_PER_LOAD, newToken);
-          if (newData.response_code === 0) {
-            return newData.results;
-          } else if (newData.results.length > 0) {
-            return newData.results;
-          } else {
-            throw new Error(`API returned response code: ${newData.response_code}`);
-          }
-        } catch (newTokenError) {
-          throw new Error('Failed to manage session token');
-        }
-      }
-    } else if (data.response_code === 0) {
-      return data.results;
-    } else if (data.results.length > 0) {
-      return data.results;
-    } else {
-      throw new Error(`API returned response code: ${data.response_code}`);
-    }
+    return handleResponseCode(data, token);
   };
 
   useEffect(() => {
@@ -93,7 +124,7 @@ export function useTriviaQuestions() {
 
   const loadMoreQuestions = async () => {
     if (!sessionToken) {
-      setError(new Error('Session token not available. Please refresh the page.'));
+      toast.error('Failed to load more questions please retry.');
       return;
     }
 
@@ -103,8 +134,10 @@ export function useTriviaQuestions() {
 
       const results = await fetchQuestionsWithTokenHandling(sessionToken);
       setQuestions((prev) => [...prev, ...results]);
+      toast.success(`Successfully loaded ${results.length} more questions`);
     } catch (err) {
-      setError(err instanceof Error ? err : new Error('Failed to load more questions'));
+      console.warn(err);      
+      toast.error('Failed to load more questions please retry.');
     } finally {
       setLoadingMore(false);
     }

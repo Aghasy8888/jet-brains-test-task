@@ -8,6 +8,14 @@ export const API_ENDPOINTS = {
 
 export const DIFFICULTY_LEVELS = ['easy', 'medium', 'hard'] as const;
 
+export const RESPONSE_CODES = {
+  SUCCESS: 0,
+  NO_RESULTS: 1,
+  INVALID_PARAMETER: 2,
+  TOKEN_NOT_FOUND: 3,
+  TOKEN_EMPTY: 4,
+} as const;
+
 export const QUESTIONS_PER_LOAD = 50;
 
 export const CHART_COLORS = [
