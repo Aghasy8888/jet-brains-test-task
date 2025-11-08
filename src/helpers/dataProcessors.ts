@@ -5,7 +5,7 @@ import type {
 } from '../types';
 import { decodeHtmlEntities } from './htmlDecoder';
 
-export function groupByCategory(
+function groupByCategory(
   questions: TriviaQuestion[]
 ): Record<string, TriviaQuestion[]> {
   return questions.reduce((acc, question) => {
@@ -18,7 +18,7 @@ export function groupByCategory(
   }, {} as Record<string, TriviaQuestion[]>);
 }
 
-export function groupByDifficulty(
+function groupByDifficulty(
   questions: TriviaQuestion[]
 ): Record<string, TriviaQuestion[]> {
   return questions.reduce((acc, question) => {
@@ -31,7 +31,7 @@ export function groupByDifficulty(
   }, {} as Record<string, TriviaQuestion[]>);
 }
 
-export function calculateCategoryStats(
+function calculateCategoryStats(
   questions: TriviaQuestion[],
   groupSmallCategories: boolean = false
 ): CategoryStats[] {
@@ -42,7 +42,7 @@ export function calculateCategoryStats(
       category,
       count: categoryQuestions.length,
     }))
-    .sort((a, b) => b.count - a.count);
+    .sort((a, b) => a.category.localeCompare(b.category));
   
   if (!groupSmallCategories) {
     return allStats;
@@ -52,27 +52,27 @@ export function calculateCategoryStats(
   const threshold = totalQuestions * 0.05; // 5% threshold
   
   const stats: CategoryStats[] = [];
-  let otherCount = 0;
+  let otherQuestionsCount = 0;
   
   allStats.forEach((stat) => {
     if (stat.count >= threshold) {
       stats.push(stat);
     } else {
-      otherCount += stat.count;
+      otherQuestionsCount += stat.count;
     }
   });
   
-  if (otherCount > 0) {
+  if (otherQuestionsCount > 0) {
     stats.push({
       category: 'Other',
-      count: otherCount,
+      count: otherQuestionsCount,
     });
   }
   
   return stats;
 }
 
-export function calculateDifficultyStats(
+function calculateDifficultyStats(
   questions: TriviaQuestion[]
 ): DifficultyStats[] {
   const grouped = groupByDifficulty(questions);
@@ -86,4 +86,6 @@ export function calculateDifficultyStats(
       return order[a.difficulty] - order[b.difficulty];
     });
 }
+
+export { groupByCategory, calculateCategoryStats, calculateDifficultyStats };
 

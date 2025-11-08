@@ -31,6 +31,7 @@ function StatsDashboard({
   loadingMore = false,
 }: StatsDashboardProps) {
   const questionsByCategory = groupByCategory(questions);
+  
   return (
     <div className="space-y-8">
       <header className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 transition-colors">

@@ -32,7 +32,7 @@ async function fetchWithRetry<T>(
   }
 }
 
-export async function requestSessionToken(): Promise<string> {
+async function requestSessionToken(): Promise<string> {
   const url = `${API_BASE_URL}${API_ENDPOINTS.token}`;
   return fetchWithRetry(async () => {
     const response = await axios.get<TokenResponse>(url, {
@@ -45,7 +45,7 @@ export async function requestSessionToken(): Promise<string> {
   });
 }
 
-export async function resetSessionToken(token: string): Promise<string> {
+async function resetSessionToken(token: string): Promise<string> {
   const url = `${API_BASE_URL}${API_ENDPOINTS.token}`;
   return fetchWithRetry(async () => {
     const response = await axios.get<TokenResponse>(url, {
@@ -58,7 +58,7 @@ export async function resetSessionToken(token: string): Promise<string> {
   });
 }
 
-export async function fetchQuestions(
+async function fetchQuestions(
   amount: number = 50,
   token?: string
 ): Promise<TriviaResponse> {
@@ -77,4 +77,6 @@ export async function fetchQuestions(
     return response.data;
   });
 }
+
+export { requestSessionToken, resetSessionToken, fetchQuestions };
 
