@@ -10,15 +10,11 @@ export function useTriviaStats(
   questions: TriviaQuestion[],
   filterCategory?: string
 ) {
-  const filteredQuestions = useMemo(() => {
-    if (!filterCategory) {
-      return questions;
-    }
-
-    return questions.filter(
-      (q) => decodeHtmlEntities(q.category) === filterCategory
-    );
-  }, [questions, filterCategory]);
+  const filteredQuestions = !filterCategory
+    ? questions
+    : questions.filter(
+        (q) => decodeHtmlEntities(q.category) === filterCategory
+      );
 
   const categoryStatsForChart = useMemo(
     () => calculateCategoryStats(filteredQuestions, true),
@@ -39,7 +35,7 @@ export function useTriviaStats(
     categoryStatsForChart,
     categoryStatsForList,
     difficultyStats,
-    totalQuestions: filteredQuestions.length,
+    totalQuestions: questions.length,
     filteredQuestions,
   };
 }

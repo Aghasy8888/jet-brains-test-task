@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState } from 'react';
 import { StatsDashboard } from './components';
 import { Spinner, ErrorModal } from './common';
 import { useTriviaQuestions } from './hooks/useTriviaQuestions';
@@ -27,14 +27,12 @@ function App() {
     filteredQuestions,
   } = useTriviaStats(questions, selectedCategory || undefined);
 
-  const uniqueCategories = useMemo(() => {
-    const categorySet = new Set<string>();
-    questions.forEach((q) => {
-      const decodedCategory = decodeHtmlEntities(q.category);
-      categorySet.add(decodedCategory);
-    });
-    return Array.from(categorySet).sort();
-  }, [questions]);
+  const categorySet = new Set<string>();
+  questions.forEach((q) => {
+    const decodedCategory = decodeHtmlEntities(q.category);
+    categorySet.add(decodedCategory);
+  });
+  const uniqueCategories = Array.from(categorySet).sort();
 
   if (questionsError) {
     const errorMessage = questionsError?.message || 'Failed to load data';
