@@ -53,7 +53,7 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8 transition-colors">
+    <main className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8 transition-colors">
       <div className="container mx-auto px-4 max-w-7xl">
         <StatsDashboard
           categoryStatsForChart={categoryStatsForChart}
@@ -68,7 +68,7 @@ function App() {
           loadingMore={loadingMore}
         />
       </div>
-    </div>
+    </main>
   );
 }
 
