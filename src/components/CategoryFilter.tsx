@@ -20,13 +20,14 @@ function CategoryFilter({
   return (
     <div>
       <label
-        htmlFor="category-filter"
+        id="category-filter-label"
         className="block max-w-md text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
       >
         Filter by Category
       </label>
       <Dropdown<string | null>
         id="category-filter"
+        ariaLabelledBy="category-filter-label"
         options={options}
         value={selectedCategory}
         onChange={onCategoryChange}

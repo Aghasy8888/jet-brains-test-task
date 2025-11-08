@@ -12,6 +12,7 @@ interface DropdownProps<T = string> {
   className?: string;
   buttonClassName?: string;
   optionClassName?: string;
+  ariaLabelledBy?: string;
 }
 
 function Dropdown<T = string>({
@@ -23,6 +24,7 @@ function Dropdown<T = string>({
   className = '',
   buttonClassName = '',
   optionClassName = '',
+  ariaLabelledBy,
 }: DropdownProps<T>) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -72,6 +74,7 @@ function Dropdown<T = string>({
         className={`select-with-icon w-full px-4 py-2.5 text-left bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-blue-500 dark:focus:border-blue-400 text-gray-700 dark:text-gray-200 hover:border-gray-400 dark:hover:border-gray-500 transition-colors ${buttonClassName}`}
         aria-expanded={isOpen}
         aria-haspopup="listbox"
+        aria-labelledby={ariaLabelledBy}
       >
         <span className="block truncate">{displayValue}</span>
       </button>
