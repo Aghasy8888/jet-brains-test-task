@@ -34,23 +34,23 @@ function StatsDashboard({
 
   return (
     <div className="space-y-8">
-      <header className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 transition-colors">
+      <header className="bg-slate-50 dark:bg-gray-800 rounded-lg shadow-md p-6 transition-colors border border-slate-200 dark:border-gray-700">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 gap-4 sm:gap-0">
           {loadMoreQuestions && (
             <button
               onClick={loadMoreQuestions}
               disabled={loadingMore}
-              className="px-4 py-2 bg-blue-600 dark:bg-blue-500 text-white rounded-lg hover:bg-blue-700 dark:hover:bg-blue-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm sm:text-base order-2"
+              className="px-4 py-2 bg-blue-600 dark:bg-blue-500 text-white rounded-lg hover:bg-blue-700 dark:hover:bg-blue-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm sm:text-base order-2 shadow-sm hover:shadow-md"
             >
               {loadingMore ? 'Loading...' : 'Load More Questions'}
             </button>
           )}
           <div className="flex items-center gap-4 order-1 sm:order-3">
             <div className="text-left sm:text-right">
-              <h1 className="text-xl sm:text-3xl font-bold text-gray-800 dark:text-gray-100">
+              <h1 className="text-xl sm:text-3xl font-bold text-slate-800 dark:text-gray-100">
                 Trivia Statistics
               </h1>
-              <p className="text-xl sm:text-2xl text-gray-500 dark:text-gray-400">
+              <p className="text-xl sm:text-2xl text-slate-600 dark:text-gray-400">
                 Total Questions:
                 <span className="text-2xl font-bold text-blue-600 dark:text-blue-400">
                   {' '}
@@ -79,16 +79,16 @@ function StatsDashboard({
         }`}
       >
         {!selectedCategory && (
-          <section className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-3 sm:p-6 transition-colors">
-            <h2 className="text-xl font-bold mb-4 text-gray-800 dark:text-gray-100">
+          <section className="bg-slate-50 dark:bg-gray-800 rounded-lg shadow-md p-3 sm:p-6 transition-colors border border-slate-200 dark:border-gray-700">
+            <h2 className="text-xl font-bold mb-4 text-slate-800 dark:text-gray-100">
               Questions by Category
             </h2>
             <CategoryChart data={categoryStatsForChart} />
           </section>
         )}
 
-        <section className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-3 sm:p-6 transition-colors">
-          <h2 className="text-xl font-bold mb-4 text-gray-800 dark:text-gray-100">
+        <section className="bg-slate-50 dark:bg-gray-800 rounded-lg shadow-md p-3 sm:p-6 transition-colors border border-slate-200 dark:border-gray-700">
+          <h2 className="text-xl font-bold mb-4 text-slate-800 dark:text-gray-100">
             Questions by Difficulty
           </h2>
           <DifficultyChart data={difficultyStats} />

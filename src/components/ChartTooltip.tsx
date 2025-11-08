@@ -23,8 +23,8 @@ function ChartTooltip({
     const value = data.value;
 
     return (
-      <div className="bg-white dark:bg-gray-800 p-3 border border-gray-300 dark:border-gray-600 rounded shadow-lg">
-        <p className="font-semibold text-gray-800 dark:text-gray-200">
+      <div className="bg-slate-50 dark:bg-gray-800 p-3 border border-slate-300 dark:border-gray-600 rounded shadow-lg">
+        <p className="font-semibold text-slate-800 dark:text-gray-200">
           {label}
         </p>
         <p

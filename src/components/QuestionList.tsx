@@ -11,17 +11,17 @@ function QuestionList({ questions }: QuestionListProps) {
       {questions.map((question, index) => (
         <div
           key={index}
-          className="p-4 bg-gray-50 dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-600"
+          className="p-4 bg-blue-50/30 dark:bg-gray-700 rounded-lg border border-slate-200 dark:border-gray-600"
         >
           <div className="flex items-start justify-between mb-2">
-            <span className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide">
+            <span className="text-xs font-semibold text-slate-600 dark:text-gray-400 uppercase tracking-wide">
               {question.difficulty}
             </span>
-            <span className="text-xs text-gray-400 dark:text-gray-500">
+            <span className="text-xs text-slate-500 dark:text-gray-500">
               Question {index + 1}
             </span>
           </div>
-          <p className="text-gray-800 dark:text-gray-200 font-medium mb-3">
+          <p className="text-slate-800 dark:text-gray-200 font-medium mb-3">
             {decodeHtmlEntities(question.question)}
           </p>
           <div className="space-y-2">
@@ -35,14 +35,14 @@ function QuestionList({ questions }: QuestionListProps) {
             </div>
             {question.incorrect_answers.length > 0 && (
               <div>
-                <span className="text-xs font-semibold text-gray-600 dark:text-gray-400">
+                <span className="text-xs font-semibold text-slate-600 dark:text-gray-400">
                   Incorrect:
                 </span>
                 <div className="flex flex-wrap gap-2 mt-1">
                   {question.incorrect_answers.map((answer, ansIndex) => (
                     <span
                       key={ansIndex}
-                      className="text-sm text-gray-600 dark:text-gray-300 bg-gray-100 dark:bg-gray-600 px-2 py-1 rounded"
+                      className="text-sm text-slate-600 dark:text-gray-300 bg-slate-100 dark:bg-gray-600 px-2 py-1 rounded"
                     >
                       {decodeHtmlEntities(answer)}
                     </span>

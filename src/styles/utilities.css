@@ -11,7 +11,7 @@
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {
-  background: #f6f7f8;
+  background: #faf9f7;
   border-radius: 4px;
 }
 
@@ -26,7 +26,7 @@
 
 .custom-scrollbar {
   scrollbar-width: thin;
-  scrollbar-color: var(--color-dark) #f6f7f8;
+  scrollbar-color: var(--color-dark) #faf9f7;
 }
 
 @media (prefers-color-scheme: dark) {

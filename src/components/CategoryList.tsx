@@ -39,8 +39,8 @@ function CategoryList({ categories, questionsByCategory }: CategoryListProps) {
   };
 
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 transition-colors">
-      <h2 className="text-2xl font-bold mb-4 text-gray-800 dark:text-gray-100">
+    <div className="bg-slate-50 dark:bg-gray-800 rounded-lg shadow-md p-6 transition-colors border border-slate-200 dark:border-gray-700">
+      <h2 className="text-2xl font-bold mb-4 text-slate-800 dark:text-gray-100">
         Categories
       </h2>
       <div className="max-h-[300px] sm:max-h-[400px] lg:max-h-[500px] overflow-y-auto custom-scrollbar pb-6">
@@ -52,7 +52,7 @@ function CategoryList({ categories, questionsByCategory }: CategoryListProps) {
             return (
               <div
                 key={category.category}
-                className="border border-gray-200 dark:border-gray-700 rounded-lg"
+                className="border border-slate-200 dark:border-gray-700 rounded-lg"
               >
                 <button
                   type="button"
@@ -60,9 +60,9 @@ function CategoryList({ categories, questionsByCategory }: CategoryListProps) {
                   onKeyDown={(e) => onCategoryKeyDown(e, category.category)}
                   aria-expanded={isOpen}
                   aria-controls={`category-${category.category}`}
-                  className="relative w-full flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors text-left focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:ring-inset"
+                  className="relative w-full flex items-center justify-between p-4 bg-blue-50/50 dark:bg-gray-700 hover:bg-blue-100/70 dark:hover:bg-gray-600 transition-colors text-left focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:ring-inset"
                 >
-                  <span className="text-gray-700 dark:text-gray-200 text-sm sm:text-base font-medium pr-1 sm:pr-0">
+                  <span className="text-slate-700 dark:text-gray-200 text-sm sm:text-base font-medium pr-1 sm:pr-0">
                     {category.category}
                   </span>
                   <div className="flex items-center gap-1 sm:gap-3">
@@ -73,7 +73,7 @@ function CategoryList({ categories, questionsByCategory }: CategoryListProps) {
                       <span className="hidden sm:inline"> questions</span>
                     </span>
                     <ChevronDownIcon
-                      className={`w-5 h-5 text-gray-500 dark:text-gray-400 transition-transform duration-200 ${
+                      className={`w-5 h-5 text-slate-500 dark:text-gray-400 transition-transform duration-200 ${
                         isOpen ? 'transform rotate-180' : ''
                       }`}
                     />
@@ -87,7 +87,7 @@ function CategoryList({ categories, questionsByCategory }: CategoryListProps) {
                       : 'max-h-0 opacity-0 pointer-events-none overflow-hidden'
                   }`}
                 >
-                  <div className="p-4 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
+                  <div className="p-4 bg-slate-50 dark:bg-gray-800 border-t border-slate-200 dark:border-gray-700">
                     <QuestionList questions={questions} />
                   </div>
                 </div>

@@ -71,7 +71,7 @@ function Dropdown<T = string>({
         id={id}
         onClick={() => setIsOpen(!isOpen)}
         onKeyDown={handleButtonKeyDown}
-        className={`select-with-icon w-full px-4 py-2.5 text-left bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-blue-500 dark:focus:border-blue-400 text-gray-700 dark:text-gray-200 hover:border-gray-400 dark:hover:border-gray-500 transition-colors ${buttonClassName}`}
+        className={`select-with-icon w-full px-4 py-2.5 text-left bg-slate-50 dark:bg-gray-700 border border-slate-300 dark:border-gray-600 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-blue-500 dark:focus:border-blue-400 text-slate-700 dark:text-gray-200 hover:border-slate-400 dark:hover:border-gray-500 transition-colors ${buttonClassName}`}
         aria-expanded={isOpen}
         aria-haspopup="listbox"
         aria-labelledby={ariaLabelledBy}
@@ -80,7 +80,7 @@ function Dropdown<T = string>({
       </button>
 
       {isOpen && (
-        <div className="absolute z-50 w-full mt-1 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg shadow-lg max-h-60 overflow-auto custom-scrollbar">
+        <div className="absolute z-50 w-full mt-1 bg-slate-50 dark:bg-gray-700 border border-slate-300 dark:border-gray-600 rounded-lg shadow-lg max-h-60 overflow-auto custom-scrollbar">
           <ul role="listbox" className="py-1" aria-labelledby={id}>
             {options.map((option, index) => {
               const isSelected = value === option.value;
@@ -89,11 +89,11 @@ function Dropdown<T = string>({
                 'px-4 py-2.5 cursor-pointer transition-colors';
               const borderClass =
                 index > 0
-                  ? 'border-t border-gray-100 dark:border-gray-600'
+                  ? 'border-t border-slate-200 dark:border-gray-600'
                   : '';
               const stateClasses = isSelected
-                ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 font-medium'
-                : 'text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600';
+                ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 font-medium'
+                : 'text-slate-700 dark:text-gray-200 hover:bg-blue-50/50 dark:hover:bg-gray-600';
 
               const className = [
                 baseClasses,

@@ -1,6 +1,7 @@
 @theme {
   /* Colors */
-  --color-light-gray: #f6f7f8;
+  --color-light-gray: #faf9f7;
+  --color-light-card: #fefefe;
   --color-blue-primary: #3b82f6;
   --color-blue-secondary: #2563eb;
   --color-green-primary: #10b981;
