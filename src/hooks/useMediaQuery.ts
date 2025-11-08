@@ -18,4 +18,3 @@ export function useMediaQuery(breakpoint = 640) {
 
   return matches;
 }
-

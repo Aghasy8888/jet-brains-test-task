@@ -1,12 +1,12 @@
-import { useState, useMemo } from "react";
-import { StatsDashboard } from "./components";
-import { Spinner, ErrorModal } from "./common";
-import { useTriviaQuestions } from "./hooks/useTriviaQuestions";
-import { useTriviaStats } from "./hooks/useTriviaStats";
-import { decodeHtmlEntities } from "./helpers/htmlDecoder";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import "./App.css";
+import { useState, useMemo } from 'react';
+import { StatsDashboard } from './components';
+import { Spinner, ErrorModal } from './common';
+import { useTriviaQuestions } from './hooks/useTriviaQuestions';
+import { useTriviaStats } from './hooks/useTriviaStats';
+import { decodeHtmlEntities } from './helpers/htmlDecoder';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import './App.css';
 
 function App() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
@@ -37,9 +37,7 @@ function App() {
   }, [questions]);
 
   if (questionsError) {
-    const errorMessage =
-      questionsError?.message ||
-      "Failed to load data";
+    const errorMessage = questionsError?.message || 'Failed to load data';
 
     return <ErrorModal message={errorMessage} />;
   }
@@ -48,8 +46,8 @@ function App() {
 
   if (isLoading) {
     const loadingMessage = questionsLoading
-      ? "Loading questions..."
-      : "Loading trivia data...";
+      ? 'Loading questions...'
+      : 'Loading trivia data...';
 
     return <Spinner message={loadingMessage} />;
   }

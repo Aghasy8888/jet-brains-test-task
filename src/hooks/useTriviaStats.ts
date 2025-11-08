@@ -14,8 +14,10 @@ export function useTriviaStats(
     if (!filterCategory) {
       return questions;
     }
-    
-    return questions.filter((q) => decodeHtmlEntities(q.category) === filterCategory);
+
+    return questions.filter(
+      (q) => decodeHtmlEntities(q.category) === filterCategory
+    );
   }, [questions, filterCategory]);
 
   const categoryStatsForChart = useMemo(
@@ -41,4 +43,3 @@ export function useTriviaStats(
     filteredQuestions,
   };
 }
-

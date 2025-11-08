@@ -1,7 +1,11 @@
 import { useState, useEffect, useRef } from 'react';
 import { toast } from 'react-toastify';
 import type { TriviaQuestion, TriviaResponse } from '../types';
-import { fetchQuestions, requestSessionToken, resetSessionToken } from '../helpers/apiHelpers';
+import {
+  fetchQuestions,
+  requestSessionToken,
+  resetSessionToken,
+} from '../helpers/apiHelpers';
 import { QUESTIONS_PER_LOAD, RESPONSE_CODES } from '../constants';
 
 export function useTriviaQuestions() {
@@ -35,13 +39,16 @@ export function useTriviaQuestions() {
         case RESPONSE_CODES.NO_RESULTS: {
           if (requestedAmount > 1) {
             const reducedAmount = Math.floor(requestedAmount / 2);
-            
-            if(reducedAmount < 1) {
+
+            if (reducedAmount < 1) {
               toast.info('There are no more questions for this query');
               return [];
             }
 
-            const retryData = await fetchQuestions(reducedAmount, currentToken || undefined);
+            const retryData = await fetchQuestions(
+              reducedAmount,
+              currentToken || undefined
+            );
             return handleResponseCode(retryData, currentToken, reducedAmount);
           } else {
             toast.info('There are no more questions for this query');
@@ -67,7 +74,9 @@ export function useTriviaQuestions() {
         }
 
         case RESPONSE_CODES.INVALID_PARAMETER: {
-          throw new Error('Invalid parameter: make sure to pass valid parameters to the API');
+          throw new Error(
+            'Invalid parameter: make sure to pass valid parameters to the API'
+          );
         }
 
         default:
@@ -108,7 +117,9 @@ export function useTriviaQuestions() {
         setQuestions(results);
         setLoading(false);
       } catch (err) {
-        setError(err instanceof Error ? err : new Error('Failed to fetch questions'));
+        setError(
+          err instanceof Error ? err : new Error('Failed to fetch questions')
+        );
         setLoading(false);
       }
     };
@@ -136,7 +147,7 @@ export function useTriviaQuestions() {
       setQuestions((prev) => [...prev, ...results]);
       toast.success(`Successfully loaded ${results.length} more questions`);
     } catch (err) {
-      console.warn(err);      
+      console.warn(err);
       toast.error('Failed to load more questions please retry.');
     } finally {
       setLoadingMore(false);
@@ -145,4 +156,3 @@ export function useTriviaQuestions() {
 
   return { questions, loading, loadingMore, error, loadMoreQuestions };
 }
-

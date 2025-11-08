@@ -1,4 +1,13 @@
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from 'recharts';
 import type { DifficultyStats } from '../types';
 import { DIFFICULTY_DATA } from '../constants';
 import ChartTooltip from './ChartTooltip';
@@ -15,7 +24,8 @@ function DifficultyChart({ data }: DifficultyChartProps) {
 
   const chartData = data.map((item) => ({
     ...item,
-    difficulty: item.difficulty.charAt(0).toUpperCase() + item.difficulty.slice(1),
+    difficulty:
+      item.difficulty.charAt(0).toUpperCase() + item.difficulty.slice(1),
   }));
 
   return (
@@ -33,4 +43,3 @@ function DifficultyChart({ data }: DifficultyChartProps) {
 }
 
 export default DifficultyChart;
-

@@ -6,7 +6,6 @@ interface QuestionListProps {
 }
 
 function QuestionList({ questions }: QuestionListProps) {
-
   return (
     <div className="space-y-4">
       {questions.map((question, index) => (
@@ -27,14 +26,18 @@ function QuestionList({ questions }: QuestionListProps) {
           </p>
           <div className="space-y-2">
             <div className="flex items-center gap-2">
-              <span className="text-xs font-semibold text-green-700 dark:text-green-400">Correct:</span>
+              <span className="text-xs font-semibold text-green-700 dark:text-green-400">
+                Correct:
+              </span>
               <span className="text-sm text-green-700 dark:text-green-400 bg-green-50 dark:bg-green-900/30 px-2 py-1 rounded">
                 {decodeHtmlEntities(question.correct_answer)}
               </span>
             </div>
             {question.incorrect_answers.length > 0 && (
               <div>
-                <span className="text-xs font-semibold text-gray-600 dark:text-gray-400">Incorrect:</span>
+                <span className="text-xs font-semibold text-gray-600 dark:text-gray-400">
+                  Incorrect:
+                </span>
                 <div className="flex flex-wrap gap-2 mt-1">
                   {question.incorrect_answers.map((answer, ansIndex) => (
                     <span
@@ -55,4 +58,3 @@ function QuestionList({ questions }: QuestionListProps) {
 }
 
 export default QuestionList;
-

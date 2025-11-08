@@ -8,4 +8,3 @@ function decodeHtmlEntities(text: string): string {
 }
 
 export { decodeHtmlEntities };
-

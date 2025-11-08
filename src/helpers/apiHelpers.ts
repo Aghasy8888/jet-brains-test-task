@@ -1,9 +1,12 @@
 import axios from 'axios';
-import type {
-  TokenResponse,
-  TriviaResponse,
-} from '../types';
-import { API_BASE_URL, API_ENDPOINTS, MULTIPLE, REQUEST, RESET } from '../constants';
+import type { TokenResponse, TriviaResponse } from '../types';
+import {
+  API_BASE_URL,
+  API_ENDPOINTS,
+  MULTIPLE,
+  REQUEST,
+  RESET,
+} from '../constants';
 
 const MAX_RETRIES = 3;
 const INITIAL_DELAY = 1000;
@@ -22,7 +25,7 @@ async function fetchWithRetry<T>(
   } catch (error) {
     if (axios.isAxiosError(error)) {
       const status = error.response?.status;
-      
+
       if ((status === 429 || (status && status >= 500)) && retries > 0) {
         await sleep(delay);
         return fetchWithRetry(fetchFn, retries - 1, delay * 2);
@@ -41,7 +44,9 @@ async function requestSessionToken(): Promise<string> {
     if (response.data.response_code === 0) {
       return response.data.token;
     }
-    throw new Error(`Failed to request token: ${response.data.response_message}`);
+    throw new Error(
+      `Failed to request token: ${response.data.response_message}`
+    );
   });
 }
 
@@ -79,4 +84,3 @@ async function fetchQuestions(
 }
 
 export { requestSessionToken, resetSessionToken, fetchQuestions };
-

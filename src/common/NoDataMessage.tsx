@@ -11,4 +11,3 @@ function NoDataMessage({ dataName }: NoDataMessageProps) {
 }
 
 export default NoDataMessage;
-

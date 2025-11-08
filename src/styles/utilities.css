@@ -1,4 +1,3 @@
-
 .select-with-icon {
   background-image: var(--icon-chevron-down);
   background-repeat: no-repeat;
@@ -12,7 +11,7 @@
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {
-  background: #F6F7F8;
+  background: #f6f7f8;
   border-radius: 4px;
 }
 
@@ -27,7 +26,7 @@
 
 .custom-scrollbar {
   scrollbar-width: thin;
-  scrollbar-color: var(--color-dark) #F6F7F8;
+  scrollbar-color: var(--color-dark) #f6f7f8;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -36,4 +35,3 @@
     scrollbar-color: var(--color-dark) #484b4e;
   }
 }
-

@@ -3,7 +3,10 @@ interface CheckmarkIconProps {
   'aria-hidden'?: boolean;
 }
 
-function CheckmarkIcon({ className = '', 'aria-hidden': ariaHidden = true }: CheckmarkIconProps) {
+function CheckmarkIcon({
+  className = '',
+  'aria-hidden': ariaHidden = true,
+}: CheckmarkIconProps) {
   return (
     <svg
       className={className}
@@ -21,4 +24,3 @@ function CheckmarkIcon({ className = '', 'aria-hidden': ariaHidden = true }: Che
 }
 
 export default CheckmarkIcon;
-

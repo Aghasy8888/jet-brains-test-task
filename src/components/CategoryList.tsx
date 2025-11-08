@@ -1,8 +1,8 @@
-import { useState } from "react";
-import type { CategoryStats, TriviaQuestion } from "../types";
-import { ChevronDownIcon, NoDataMessage } from "../common";
-import QuestionList from "./QuestionList";
-import { CATEGORIES } from "../constants";
+import { useState } from 'react';
+import type { CategoryStats, TriviaQuestion } from '../types';
+import { ChevronDownIcon, NoDataMessage } from '../common';
+import QuestionList from './QuestionList';
+import { CATEGORIES } from '../constants';
 
 interface CategoryListProps {
   categories: CategoryStats[];
@@ -32,7 +32,7 @@ function CategoryList({ categories, questionsByCategory }: CategoryListProps) {
     e: React.KeyboardEvent<HTMLButtonElement>,
     category: string
   ) => {
-    if (e.key === "Enter" || e.key === " ") {
+    if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
       toggleCategory(category);
     }
@@ -67,14 +67,14 @@ function CategoryList({ categories, questionsByCategory }: CategoryListProps) {
                   </span>
                   <div className="flex items-center gap-1 sm:gap-3">
                     <span className="absolute top-0 right-1 sm:relative sm:right-0 text-[0.75rem] sm:text-base text-blue-600 dark:text-blue-400 font-semibold">
-                      <span className="inline sm:hidden">{"["}</span>
+                      <span className="inline sm:hidden">{'['}</span>
                       {category.count}
-                      <span className="inline sm:hidden">{"]"}</span>
+                      <span className="inline sm:hidden">{']'}</span>
                       <span className="hidden sm:inline"> questions</span>
                     </span>
                     <ChevronDownIcon
                       className={`w-5 h-5 text-gray-500 dark:text-gray-400 transition-transform duration-200 ${
-                        isOpen ? "transform rotate-180" : ""
+                        isOpen ? 'transform rotate-180' : ''
                       }`}
                     />
                   </div>
@@ -83,13 +83,13 @@ function CategoryList({ categories, questionsByCategory }: CategoryListProps) {
                   id={`category-${category.category}`}
                   className={`transition-all duration-300 ease-in-out ${
                     isOpen
-                      ? "max-h-[5000px] opacity-100"
-                      : "max-h-0 opacity-0 pointer-events-none overflow-hidden"
+                      ? 'max-h-[5000px] opacity-100'
+                      : 'max-h-0 opacity-0 pointer-events-none overflow-hidden'
                   }`}
                 >
-                    <div className="p-4 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
-                      <QuestionList questions={questions} />
-                    </div>
+                  <div className="p-4 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
+                    <QuestionList questions={questions} />
+                  </div>
                 </div>
               </div>
             );

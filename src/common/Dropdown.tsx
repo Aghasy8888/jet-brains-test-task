@@ -29,7 +29,7 @@ function Dropdown<T = string>({
 
   const selectedOption = options.find((opt) => opt.value === value);
   const displayValue = selectedOption?.label || placeholder;
-  
+
   const onCloseDropdown = () => setIsOpen(false);
   useClickOutside({
     ref: dropdownRef,
@@ -52,7 +52,10 @@ function Dropdown<T = string>({
     }
   };
 
-  const handleOptionKeyDown = (e: React.KeyboardEvent<HTMLLIElement>, optionValue: T) => {
+  const handleOptionKeyDown = (
+    e: React.KeyboardEvent<HTMLLIElement>,
+    optionValue: T
+  ) => {
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
       handleSelect(optionValue);
@@ -75,20 +78,20 @@ function Dropdown<T = string>({
 
       {isOpen && (
         <div className="absolute z-50 w-full mt-1 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg shadow-lg max-h-60 overflow-auto custom-scrollbar">
-          <ul
-            role="listbox"
-            className="py-1"
-            aria-labelledby={id}
-          >
+          <ul role="listbox" className="py-1" aria-labelledby={id}>
             {options.map((option, index) => {
               const isSelected = value === option.value;
-              
-              const baseClasses = 'px-4 py-2.5 cursor-pointer transition-colors';
-              const borderClass = index > 0 ? 'border-t border-gray-100 dark:border-gray-600' : '';
+
+              const baseClasses =
+                'px-4 py-2.5 cursor-pointer transition-colors';
+              const borderClass =
+                index > 0
+                  ? 'border-t border-gray-100 dark:border-gray-600'
+                  : '';
               const stateClasses = isSelected
                 ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 font-medium'
                 : 'text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600';
-              
+
               const className = [
                 baseClasses,
                 borderClass,
@@ -97,7 +100,7 @@ function Dropdown<T = string>({
               ]
                 .filter(Boolean)
                 .join(' ');
-              
+
               return (
                 <li
                   key={index}
@@ -124,4 +127,3 @@ function Dropdown<T = string>({
 }
 
 export default Dropdown;
-

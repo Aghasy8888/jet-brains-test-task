@@ -3,7 +3,10 @@ interface ChevronDownIconProps {
   'aria-hidden'?: boolean;
 }
 
-function ChevronDownIcon({ className = '', 'aria-hidden': ariaHidden = true }: ChevronDownIconProps) {
+function ChevronDownIcon({
+  className = '',
+  'aria-hidden': ariaHidden = true,
+}: ChevronDownIconProps) {
   return (
     <svg
       className={className}
@@ -23,4 +26,3 @@ function ChevronDownIcon({ className = '', 'aria-hidden': ariaHidden = true }: C
 }
 
 export default ChevronDownIcon;
-
