@@ -1,9 +1,11 @@
-import CategoryChart from './CategoryChart';
-import DifficultyChart from './DifficultyChart';
+import { lazy, Suspense } from 'react';
 import CategoryList from './CategoryList';
 import CategoryFilter from './CategoryFilter';
 import type { CategoryStats, DifficultyStats, TriviaQuestion } from '../types';
 import { groupByCategory } from '../helpers/dataProcessors';
+
+const CategoryChart = lazy(() => import('./CategoryChart'));
+const DifficultyChart = lazy(() => import('./DifficultyChart'));
 
 interface StatsDashboardProps {
   categoryStatsForChart: CategoryStats[];
@@ -83,7 +85,9 @@ function StatsDashboard({
             <h2 className="text-xl font-bold mb-4 text-slate-800 dark:text-gray-100">
               Questions by Category
             </h2>
-            <CategoryChart data={categoryStatsForChart} />
+            <Suspense fallback={null}>
+              <CategoryChart data={categoryStatsForChart} />
+            </Suspense>
           </section>
         )}
 
@@ -91,7 +95,9 @@ function StatsDashboard({
           <h2 className="text-xl font-bold mb-4 text-slate-800 dark:text-gray-100">
             Questions by Difficulty
           </h2>
-          <DifficultyChart data={difficultyStats} />
+          <Suspense fallback={null}>
+            <DifficultyChart data={difficultyStats} />
+          </Suspense>
         </section>
       </div>
     </div>

@@ -1,12 +1,17 @@
-import { useState } from 'react';
+import { useState, lazy, Suspense } from 'react';
 import { StatsDashboard } from './components';
 import { Spinner, ErrorModal } from './common';
 import { useTriviaQuestions } from './hooks/useTriviaQuestions';
 import { useTriviaStats } from './hooks/useTriviaStats';
 import { decodeHtmlEntities } from './helpers/htmlDecoder';
-import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './App.css';
+
+const ToastContainer = lazy(() =>
+  import('react-toastify').then((module) => ({
+    default: module.ToastContainer,
+  }))
+);
 
 function App() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
@@ -68,18 +73,20 @@ function App() {
           />
         </div>
       </main>
-      <ToastContainer
-        position="bottom-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="colored"
-      />
+      <Suspense fallback={null}>
+        <ToastContainer
+          position="bottom-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="colored"
+        />
+      </Suspense>
     </>
   );
 }
