@@ -14,13 +14,9 @@ A React app that fetches trivia questions and displays statistics by category an
 - **Interactive Statistics Dashboard** - Visualize trivia questions by category and difficulty with interactive charts
 - **Category Filtering** - Filter questions by category to focus on specific topics
 - **Data Visualization** - Pie charts for category distribution and difficulty breakdown
-- **Load More Questions** - Dynamically load additional questions with pagination support
+- **Load More Questions** - Dynamically load additional questions
 - **Duplicate Prevention** - Professional API handling with session token management to prevent duplicate questions across requests
 - **Dark Mode Support** - Full dark mode implementation with smooth transitions
-- **Responsive Design** - Optimized for all screen sizes from mobile to desktop
-- **Performance Optimized** - Lazy loading of chart components and efficient data processing
-- **Toast Notifications** - User-friendly notifications for successful operations and errors
-- **Error Handling** - Comprehensive error handling with automatic retry logic and token management
 
 ## Tech Stack
 
